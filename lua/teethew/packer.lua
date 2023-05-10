@@ -4,46 +4,58 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
-  -- Packer can manage itself
-  use 'wbthomason/packer.nvim'
+    -- Packer can manage itself
+    use 'wbthomason/packer.nvim'
 
-  use {
-	  'nvim-telescope/telescope.nvim', tag = '0.1.1',
-	  -- or                            , branch = '0.1.x',
-	  requires = { {'nvim-lua/plenary.nvim'} }
-  }
+    use {
+        'nvim-telescope/telescope.nvim', tag = '0.1.1',
+        -- or                            , branch = '0.1.x',
+        requires = { {'nvim-lua/plenary.nvim'} }
+    }
 
-  use({
-	'rose-pine/neovim',
-	as = 'rose-pine',
-	config = function()
-		vim.cmd('colorscheme rose-pine')
-	end
-  })
+    -- Using Packer:
+    use 'Mofiqul/dracula.nvim'
 
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+    }
 
-  use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
-  use('theprimeagen/harpoon')
-  use('mbbill/undotree')
+    -- Unless you are still migrating, remove the deprecated commands from v1.x
+    vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
-  use {
-	  'VonHeikemen/lsp-zero.nvim',
-	  branch = 'v2.x',
-	  requires = {
-		  -- LSP Support
-		  {'neovim/nvim-lspconfig'},             -- Required
-		  {                                      -- Optional
-		  'williamboman/mason.nvim',
-		  build = function()
-			  pcall(vim.cmd, 'MasonUpdate')
-		  end,
-	  },
-	  {'williamboman/mason-lspconfig.nvim'}, -- Optional
+    use {
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v2.x",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+            "MunifTanjim/nui.nvim",
+        }
+    }
 
-	  -- Autocompletion
-	  {'hrsh7th/nvim-cmp'},     -- Required
-	  {'hrsh7th/cmp-nvim-lsp'}, -- Required
-	  {'L3MON4D3/LuaSnip'},     -- Required
-  }
+    use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
+    use('theprimeagen/harpoon')
+    use('mbbill/undotree')
+
+    use {
+        'VonHeikemen/lsp-zero.nvim',
+        branch = 'v2.x',
+        requires = {
+            -- LSP Support
+            {'neovim/nvim-lspconfig'},             -- Required
+            {                                      -- Optional
+            'williamboman/mason.nvim',
+            build = function()
+                pcall(vim.cmd, 'MasonUpdate')
+            end,
+        },
+        {'williamboman/mason-lspconfig.nvim'}, -- Optional
+
+        -- Autocompletion
+        {'hrsh7th/nvim-cmp'},     -- Required
+        {'hrsh7th/cmp-nvim-lsp'}, -- Required
+        {'L3MON4D3/LuaSnip'},     -- Required
+    }
 }
 end)
